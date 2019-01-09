@@ -13,6 +13,9 @@ type t =
 
 let module_name s =
   let s =
+    let parts = String.split_on_char '#' s in
+    let length = List.length parts in
+    let s = if length > 1 then List.nth parts (length - 1) else s in
     let last = String.length s - 1 in
     if s.[0] = '{' && s.[last] = '}' then "By_" ^ String.sub s 1 (last - 1)
     else s in
