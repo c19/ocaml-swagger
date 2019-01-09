@@ -13,7 +13,7 @@ let rec keep_some = function
 let snake_case =
   let re1 = Re.Pcre.regexp "([A-Z]+)([A-Z][a-z]{2,})" in
   let re2 = Re.Pcre.regexp "([a-z0-9])([A-Z])" in
-  let re3 = Re.compile (Re.Pcre.re "-") in
+  let re3 = Re.compile (Re.Pcre.re "[- ]") in
   let underscore re s =
     let replace groups =
       sprintf "%s_%s"
