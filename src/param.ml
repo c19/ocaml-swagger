@@ -29,12 +29,22 @@ let kind_to_string (p : t) =
       | None -> failwith ("Param.kind_to_string: array type must have an "
                           ^ "'items' field")
 
-let is_keyword = function
-  | "external"
-  | "object"
-  | "to"
-  | "type" -> true
-  | _ -> false
+module SS = Set.Make(String)
+
+let reserved_words = List.fold_right SS.add 
+["and"; "as"; "assert"; "asr"; "begin"; "class";
+ "constraint"; "do"; "done"; "downto"; "else";
+ "end"; "exception"; "external"; "false"; "for";
+ "fun"; "function"; "functor"; "if"; "in"; "include";
+ "inherit"; "initializer"; "land"; "lazy"; "let";
+ "lor"; "lsl"; "lsr"; "lxor"; "match"; "method";
+ "mod"; "module"; "mutable"; "new"; "nonrec";
+ "object"; "of"; "open"; "or"; "private"; "rec";
+ "sig"; "struct"; "then"; "to"; "true"; "try";
+ "type"; "val"; "virtual"; "when"; "while"; "with";
+ "parser"; "value"] SS.empty
+
+let is_keyword elt = SS.exists ((=) (String.lowercase_ascii elt)) reserved_words
 
 let name n =
   let n =
